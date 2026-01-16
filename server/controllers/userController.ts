@@ -52,7 +52,26 @@ export const createUserProject = async (req: Request, res: Response) => {
       },
     });
 
-    res.json({ credits: user?.credits });
+    // Update User's Total Creation
+    await prisma.user.update({
+      where: { id: userId },
+      data: { totalCreation: { increment: 1 } },
+    });
+
+    await prisma.conversation.create({
+      data: {
+        role: "user",
+        content: initial_prompt,
+        projectId: project.id,
+      },
+    });
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { credits: { decrement: 5 } },
+    });
+
+    res.json({ projectId: project.id });
   } catch (error: any) {
     console.log(error.code || error.message);
     res.status(500).json({ message: error.message });
