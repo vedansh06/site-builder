@@ -246,3 +246,37 @@ export const getUserProjects = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Controller Function to Toggle Project Publish
+export const togglePublish = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { projectId } = req.params;
+
+    const project = await prisma.websiteProject.findUnique({
+      where: { id: projectId, userId },
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    await prisma.websiteProject.update({
+      where: { id: projectId },
+      data: { isPublished: !project.isPublished },
+    });
+
+    res.json({
+      message: project.isPublished
+        ? "Project Unpublished"
+        : "Project Published Successfully",
+    });
+  } catch (error: any) {
+    console.log(error.code || error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
