@@ -280,3 +280,6 @@ export const togglePublish = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Controller Function to Purchase Credits
+export const purchaseCredits = async (req: Request, res: Response) => {};
