@@ -8,6 +8,7 @@ import React, {
 import type { Project } from "../types";
 import { iframeScript } from "../assets/assets";
 import EditorPanel from "./EditorPanel";
+import LoaderSteps from "./LoaderSteps";
 
 interface ProjectPreviewProps {
   project: Project;
@@ -23,7 +24,7 @@ export interface ProjectPreviewRef {
 const ProjectPreview = forwardRef<ProjectPreviewRef, ProjectPreviewProps>(
   (
     { project, isGenerating, device = "desktop", showEditorPanel = true },
-    ref
+    ref,
   ) => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -85,7 +86,7 @@ const ProjectPreview = forwardRef<ProjectPreviewRef, ProjectPreviewProps>(
             type: "UPDATE_ELEMENT",
             payload: updates,
           },
-          "*"
+          "*",
         );
       }
     };
@@ -119,7 +120,7 @@ const ProjectPreview = forwardRef<ProjectPreviewRef, ProjectPreviewProps>(
                   if (iframeRef.current?.contentWindow) {
                     iframeRef.current?.contentWindow.postMessage(
                       { type: "CLEAR_SELECTION_REQUEST" },
-                      "*"
+                      "*",
                     );
                   }
                 }}
@@ -127,11 +128,11 @@ const ProjectPreview = forwardRef<ProjectPreviewRef, ProjectPreviewProps>(
             )}
           </>
         ) : (
-          isGenerating && <div>loading</div>
+          isGenerating && <LoaderSteps />
         )}
       </div>
     );
-  }
+  },
 );
 
 export default ProjectPreview;
