@@ -51,7 +51,24 @@ const Projects = () => {
     }
   };
 
-  const saveProject = async () => {};
+  const saveProject = async () => {
+    if (!previewRef.current) return;
+
+    const code = previewRef.current.getCode();
+    if (!code) return;
+    setIsSaving(true);
+    try {
+      const { data } = await api.put(`/api/project/save/${projectId}`, {
+        code,
+      });
+      toast.success(data.message);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   // download code (index.html)
   const downloadCode = () => {
@@ -70,7 +87,18 @@ const Projects = () => {
     element.click();
   };
 
-  const togglePublish = async () => {};
+  const togglePublish = async () => {
+    try {
+      const { data } = await api.get(`/api/user/publish-toggle/${projectId}`);
+      toast.success(data.message);
+      setProject((prev) =>
+        prev ? { ...prev, isPublished: !prev.isPublished } : null,
+      );
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (session?.user) {
