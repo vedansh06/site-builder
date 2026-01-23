@@ -21,8 +21,6 @@ app.use(
   }),
 );
 
-app.options("/api/*", cors());
-
 app.post(
   "/api/stripe",
   express.raw({ type: "application/json" }),
