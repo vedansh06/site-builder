@@ -10,7 +10,8 @@ import { stripeWebhook } from "./controllers/stripeWebhook.js";
 const app = express();
 const port = process.env.PORT || 3000;
 
-const allowedOrigins = process.env.TRUSTED_ORIGINS?.split(",") || [];
+const allowedOrigins =
+  process.env.TRUSTED_ORIGINS?.split(",").map((origin) => origin.trim()) || [];
 
 app.use(
   cors({
