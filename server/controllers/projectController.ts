@@ -48,7 +48,7 @@ export const makeRevision = async (req: Request, res: Response) => {
 
     // Enhance user prompt
     const promptEnhanceResponse = await openai.chat.completions.create({
-      model: "tngtech/deepseek-r1t2-chimera:free",
+      model: "deepseek/deepseek-chat-v3-0324",
       messages: [
         {
           role: "system",
@@ -89,7 +89,7 @@ export const makeRevision = async (req: Request, res: Response) => {
 
     // Genearate website code
     const codeGenerationResponse = await openai.chat.completions.create({
-      model: "tngtech/deepseek-r1t2-chimera:free",
+      model: "deepseek/deepseek-chat-v3-0324",
       messages: [
         {
           role: "system",
