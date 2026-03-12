@@ -77,7 +77,7 @@ export const createUserProject = async (req: Request, res: Response) => {
 
     // Enhance user prompt
     const promptEnhanceResponse = await openai.chat.completions.create({
-      model: "deepseek/deepseek-chat-v3-0324",
+      model: "nvidia/nemotron-3-super-120b-a12b:free",
       messages: [
         {
           role: "system",
@@ -121,7 +121,7 @@ Return ONLY the enhanced prompt, nothing else. Make it detailed but concise (2-3
     // Generate website code
 
     const codeGenerationResponse = await openai.chat.completions.create({
-      model: "deepseek/deepseek-chat-v3-0324",
+      model: "nvidia/nemotron-3-super-120b-a12b:free",
       messages: [
         {
           role: "system",
